@@ -1,4 +1,4 @@
-// This file is ignored by Git. Do NOT commit this.
+
 window.firebaseConfig = {
     apiKey: "AIzaSyC6Cr8OI7pjTt3t70hrjiSW7kWeZj4jHWc",
     authDomain: "bakeryapp-c4812.firebaseapp.com",
