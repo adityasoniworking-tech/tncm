@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/menu", "destination": "/Pages/menu.html" },
+    { "source": "/about", "destination": "/Pages/about.html" },
+    { "source": "/contact", "destination": "/Pages/contact.html" },
+    { "source": "/tracking", "destination": "/Pages/tracking.html" },
+    { "source": "/whatsapp", "destination": "/Pages/whatsapp_select.html" },
+    { "source": "/offline", "destination": "/Pages/offline.html" }
+  ]
+}
