@@ -1,11 +1,34 @@
 {
   "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/menu", "destination": "/HTML/menu.html" },
-    { "source": "/about", "destination": "/HTML/about.html" },
-    { "source": "/contact", "destination": "/HTML/contact.html" },
-    { "source": "/tracking", "destination": "/HTML/tracking.html" },
-    { "source": "/whatsapp", "destination": "/HTML/whatsapp_select.html" },
-    { "source": "/offline", "destination": "/HTML/offline.html" }
+    {
+      "source": "/menu",
+      "destination": "/html/menu.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/html/about.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/html/contact.html"
+    },
+    {
+      "source": "/tracking",
+      "destination": "/html/tracking.html"
+    },
+    {
+      "source": "/whatsapp",
+      "destination": "/html/whatsapp_select.html"
+    },
+    {
+      "source": "/offline",
+      "destination": "/html/offline.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/html/404.html"
+    }
   ]
 }

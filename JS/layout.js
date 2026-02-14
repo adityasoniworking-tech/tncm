@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // 1. INJECT HEADER
     const headerHTML = `
         <a href="https://thenuttychocomorsels.in/" class="logo">
-           <img src="../assets/images/logo-mobile.svg" alt="Logo" style="height: 40px; width: auto;">
+           <img src="/assets/images/logo-mobile.svg" alt="Logo" style="height: 40px; width: auto;">
            thenuttychocomorsels
         </a>
         <div class="mobile-toggle" id="menuBtn">

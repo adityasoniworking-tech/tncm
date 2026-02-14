@@ -9,27 +9,27 @@
         "rewrites": [
             {
                 "source": "/menu",
-                "destination": "/HTML/menu.html"
+                "destination": "/html/menu.html"
             },
             {
                 "source": "/about",
-                "destination": "/HTML/about.html"
+                "destination": "/html/about.html"
             },
             {
                 "source": "/contact",
-                "destination": "/HTML/contact.html"
+                "destination": "/html/contact.html"
             },
             {
                 "source": "/tracking",
-                "destination": "/HTML/tracking.html"
+                "destination": "/html/tracking.html"
             },
             {
                 "source": "/whatsapp",
-                "destination": "/HTML/whatsapp_select.html"
+                "destination": "/html/whatsapp_select.html"
             },
             {
                 "source": "/offline",
-                "destination": "/HTML/offline.html"
+                "destination": "/html/offline.html"
             }
         ]
     }

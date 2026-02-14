@@ -45,7 +45,7 @@
       "name": "View Menu",
       "short_name": "Menu",
       "description": "Browse our delicious bakery items",
-      "url": "./HTML/menu.html",
+      "url": "./html/menu.html",
       "icons": [
         {
           "src": "./assets/icons/favicon-16x16.png",
@@ -57,7 +57,7 @@
       "name": "Track Order",
       "short_name": "Track",
       "description": "Track your delivery order",
-      "url": "./HTML/tracking.html",
+      "url": "./html/tracking.html",
       "icons": [
         {
           "src": "./assets/icons/favicon-16x16.png",
@@ -69,7 +69,7 @@
       "name": "Contact Us",
       "short_name": "Contact",
       "description": "Get in touch with us",
-      "url": "./HTML/contact.html",
+      "url": "./html/contact.html",
       "icons": [
         {
           "src": "./assets/icons/favicon-16x16.png",

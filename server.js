@@ -21,12 +21,12 @@ const MIMETYPES = {
 
 // Define your Clean URL Rewrites here
 const REWRITES = {
-    '/menu': '/HTML/menu.html',
-    '/about': '/HTML/about.html',
-    '/contact': '/HTML/contact.html',
-    '/tracking': '/HTML/tracking.html',
-    '/whatsapp': '/HTML/whatsapp_select.html',
-    '/offline': '/HTML/offline.html',
+    '/menu': '/html/menu.html',
+    '/about': '/html/about.html',
+    '/contact': '/html/contact.html',
+    '/tracking': '/html/tracking.html',
+    '/whatsapp': '/html/whatsapp_select.html',
+    '/offline': '/html/offline.html',
 };
 
 const server = http.createServer((req, res) => {
@@ -72,5 +72,5 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
     console.log(`\n🚀 Local Server Running!`);
     console.log(`👉 Open: http://127.0.0.1:${PORT}`);
-    console.log(`✨ Clean URLs enabled (e.g., /menu works instead of /HTML/menu.html)\n`);
+    console.log(`✨ Clean URLs enabled (e.g., /menu works instead of /html/menu.html)\n`);
 });
