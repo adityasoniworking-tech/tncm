@@ -64,13 +64,11 @@ self.addEventListener('fetch', (event) => {
 
   // Skip POST requests and other non-GET methods
   if (event.request.method !== 'GET') {
-    event.respondWith(fetch(event.request));
     return;
   }
   
   // Skip cache for CSS and JS files with version params
   if (event.request.url.includes('?v=')) {
-    event.respondWith(fetch(event.request));
     return;
   }
   
