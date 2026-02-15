@@ -219,30 +219,63 @@ window.placeOrder = function(paymentMethod = 'COD') {
     const name = document.getElementById('custName').value.trim();
     const phone = document.getElementById('custPhone').value.trim();
     
-    // Collect structured address fields
-    const streetName = document.getElementById('streetName').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const taluka = document.getElementById('taluka').value.trim();
-    const district = document.getElementById('district').value.trim();
-    const state = document.getElementById('state').value.trim();
-    const pincode = document.getElementById('pincode').value.trim();
-    const landmark = document.getElementById('landmark').value.trim();
-    
-    // Create formatted address string
-    const addressParts = [streetName, city, taluka, district, state, pincode];
-    const address = addressParts.filter(part => part).join(', ') + (landmark ? ` (Near: ${landmark})` : '');
-    
-    const mapLocation = document.getElementById('mapLocation').value.trim();
-    const lat = document.getElementById('custLat')?.value.trim() || '';
-    const lng = document.getElementById('custLng')?.value.trim() || '';
-    const subtotal = parseFloat(document.getElementById('cartTotal').innerText);
-    const deliveryCharge = window.currentDeliveryCharge || 0;
-    const grandTotal = subtotal + deliveryCharge;
-
-    if(!name || !phone || !streetName || !city || !state || !pincode) {
-        return alert("Please fill all required address fields (Street, City, State, Pincode).");
+    // Determine Delivery Type
+    let deliveryType = "Home Delivery";
+    const pickupRadio = document.querySelector('input[name="deliveryType"][value="Self Pickup"]');
+    if (pickupRadio && pickupRadio.checked) {
+        deliveryType = "Self Pickup";
     }
-    if(!mapLocation) return alert("Please select your location on map for delivery calculation!");
+
+    if (!name || !phone) {
+        return alert("Please enter your Name and Phone Number.");
+    }
+
+    let address = "";
+    let structuredAddress = {};
+    let mapLocation = "";
+    let lat = "";
+    let lng = "";
+    let deliveryCharge = 0;
+    
+    const subtotal = parseFloat(document.getElementById('cartTotal').innerText);
+
+    if (deliveryType === "Home Delivery") {
+        // Collect structured address fields
+        const streetName = document.getElementById('streetName').value.trim();
+        const city = document.getElementById('city').value.trim();
+        const taluka = document.getElementById('taluka').value.trim();
+        const district = document.getElementById('district').value.trim();
+        const state = document.getElementById('state').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        const landmark = document.getElementById('landmark').value.trim();
+        
+        // Create formatted address string
+        const addressParts = [streetName, city, taluka, district, state, pincode];
+        address = addressParts.filter(part => part).join(', ') + (landmark ? ` (Near: ${landmark})` : '');
+        
+        structuredAddress = {
+            streetName, city, taluka, district, state, pincode, landmark
+        };
+        
+        mapLocation = document.getElementById('mapLocation').value.trim();
+        lat = document.getElementById('custLat')?.value.trim() || '';
+        lng = document.getElementById('custLng')?.value.trim() || '';
+        
+        deliveryCharge = window.currentDeliveryCharge || 0;
+
+        if(!streetName || !city || !state || !pincode) {
+            return alert("Please fill all required address fields (Street, City, State, Pincode).");
+        }
+        if(!mapLocation) return alert("Please select your location on map for delivery calculation!");
+    } else {
+        // SELF PICKUP logic
+        address = "Self Pickup (Store Visit)";
+        structuredAddress = { type: "Self Pickup" };
+        mapLocation = "N/A (Self Pickup)";
+        deliveryCharge = 0;
+    }
+    
+    const grandTotal = subtotal + deliveryCharge;
 
     let orderItems = cartIds.map(id => {
         let item = dbMenuItems.find(i => i.id == id);
@@ -255,21 +288,14 @@ window.placeOrder = function(paymentMethod = 'COD') {
     
     // --- UPDATED DATA WITH USER ID ---
     db.collection("orders").add({
-        userId: user.uid, // ✨ Ab ye order aapki profile se link ho gaya
+        userId: user.uid, 
         userEmail: user.email,
         userName: name, 
         phone, 
-        address, // Formatted complete address
-        structuredAddress: {
-            streetName,
-            city,
-            taluka,
-            district,
-            state,
-            pincode,
-            landmark
-        },
-        mapLocation, // Map coordinates stored separately
+        deliveryType: deliveryType, // Storing Type
+        address, // Formatted address or "Self Pickup"
+        structuredAddress,
+        mapLocation, 
         lat: lat,
         lng: lng,
         items: orderItems, 

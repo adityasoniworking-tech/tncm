@@ -37,50 +37,65 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
                     <div class="checkout-form">
-                        <h3 style="font-family: 'Playfair Display', serif; color: #6b0f1a; margin-bottom: 15px;">Shipping Details</h3>
+                        <h3 style="font-family: 'Playfair Display', serif; color: #6b0f1a; margin-bottom: 15px;">Checkout Details</h3>
+                        
+                        <!-- Delivery Type Selection -->
+                        <div style="background:#fff; padding:10px; border-radius:10px; margin-bottom:15px; border:1px solid #eee; display:flex; gap:10px;">
+                            <label style="flex:1; cursor:pointer; display:flex; align-items:center; gap:5px; padding:10px; border:1px solid #ddd; border-radius:8px; transition:0.3s; background:#f0f8ff; border-color:#6b0f1a;" id="labelHomeDelivery" onclick="window.toggleDeliveryType('Home Delivery')">
+                                <input type="radio" name="deliveryType" value="Home Delivery" checked style="accent-color:#6b0f1a;">
+                                <span style="font-weight:bold; font-size:0.9rem;">🏠 Home Delivery</span>
+                            </label>
+                            <label style="flex:1; cursor:pointer; display:flex; align-items:center; gap:5px; padding:10px; border:1px solid #ddd; border-radius:8px; transition:0.3s; background:#fff;" id="labelSelfPickup" onclick="window.toggleDeliveryType('Self Pickup')">
+                                <input type="radio" name="deliveryType" value="Self Pickup" style="accent-color:#6b0f1a;">
+                                <span style="font-weight:bold; font-size:0.9rem;">🏬 Self Pickup</span>
+                            </label>
+                        </div>
                         
                         <input id="custName" type="text" placeholder="Full Name" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; background: #f9f9f9;">
                         <input id="custPhone" type="text" placeholder="Phone Number" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; background: #f9f9f9;">
                         
-                        <!-- Structured Address Fields -->
-                        <div style="background:#fff; border: 1px solid #eee; padding:15px; border-radius:10px; margin-bottom:15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
-                            <h4 style="margin:0 0 12px 0; color:#495057; font-size:0.9rem; font-weight:600; text-transform: uppercase; letter-spacing: 0.5px;">📍 Delivery Address</h4>
-                            
-                            <input id="streetName" type="text" placeholder="Street Name / House No. / Building" style="width:100%; padding:10px; margin-bottom: 10px; border:1px solid #ddd; border-radius:6px;">
-                            
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-                                <input id="city" type="text" placeholder="City" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
-                                <input id="taluka" type="text" placeholder="Taluka" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                        <!-- WRAPPER FOR ADDRESS SECTION -->
+                        <div id="deliveryAddressSection">
+                            <!-- Structured Address Fields -->
+                            <div style="background:#fff; border: 1px solid #eee; padding:15px; border-radius:10px; margin-bottom:15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+                                <h4 style="margin:0 0 12px 0; color:#495057; font-size:0.9rem; font-weight:600; text-transform: uppercase; letter-spacing: 0.5px;">📍 Delivery Address</h4>
+                                
+                                <input id="streetName" type="text" placeholder="Street Name / House No. / Building" style="width:100%; padding:10px; margin-bottom: 10px; border:1px solid #ddd; border-radius:6px;">
+                                
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                                    <input id="city" type="text" placeholder="City" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                                    <input id="taluka" type="text" placeholder="Taluka" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                                </div>
+                                
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+                                    <input id="district" type="text" placeholder="District" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                                    <input id="state" type="text" placeholder="State" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                                </div>
+                                
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                    <input id="pincode" type="text" placeholder="Pincode" maxlength="6" pattern="[0-9]{6}" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <input id="landmark" type="text" placeholder="Landmark (Optional)" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                                </div>
                             </div>
                             
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
-                                <input id="district" type="text" placeholder="District" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
-                                <input id="state" type="text" placeholder="State" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
+                            <!-- Location Selection -->
+                            <div style="margin-bottom: 20px;">
+                                <input id="mapLocation" type="text" placeholder="Select Delivery Location on Map" readonly style="width:100%; padding:12px; margin-bottom:10px; border:1px dashed #6b0f1a; border-radius:8px; background:#fff0f0; color:#6b0f1a; cursor: pointer;" onclick="window.openMapModal()">
+                                
+                                <div style="display: flex; gap: 10px;">
+                                    <button onclick="window.getUserLocation()" style="flex:1; background:#fff; color:#28a745; border: 1px solid #28a745; padding:10px; border-radius:8px; cursor:pointer; font-size:0.9rem; font-weight:500;">
+                                        <i class="fa-solid fa-location-crosshairs"></i> Locate Me
+                                    </button>
+                                    <button onclick="window.openMapModal()" style="flex:1; background:#fff; color:#007bff; border: 1px solid #007bff; padding:10px; border-radius:8px; cursor:pointer; font-size:0.9rem; font-weight:500;">
+                                        <i class="fa-solid fa-map"></i> Open Map
+                                    </button>
+                                </div>
                             </div>
                             
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                                <input id="pincode" type="text" placeholder="Pincode" maxlength="6" pattern="[0-9]{6}" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                                <input id="landmark" type="text" placeholder="Landmark (Optional)" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:6px;">
-                            </div>
+                            <!-- Hidden coordinate inputs -->
+                            <input type="hidden" id="custLat" name="custLat">
+                            <input type="hidden" id="custLng" name="custLng">
                         </div>
-                        
-                        <!-- Location Selection -->
-                        <div style="margin-bottom: 20px;">
-                            <input id="mapLocation" type="text" placeholder="Select Delivery Location on Map" readonly style="width:100%; padding:12px; margin-bottom:10px; border:1px dashed #6b0f1a; border-radius:8px; background:#fff0f0; color:#6b0f1a; cursor: pointer;" onclick="window.openMapModal()">
-                            
-                            <div style="display: flex; gap: 10px;">
-                                <button onclick="window.getUserLocation()" style="flex:1; background:#fff; color:#28a745; border: 1px solid #28a745; padding:10px; border-radius:8px; cursor:pointer; font-size:0.9rem; font-weight:500;">
-                                    <i class="fa-solid fa-location-crosshairs"></i> Locate Me
-                                </button>
-                                <button onclick="window.openMapModal()" style="flex:1; background:#fff; color:#007bff; border: 1px solid #007bff; padding:10px; border-radius:8px; cursor:pointer; font-size:0.9rem; font-weight:500;">
-                                    <i class="fa-solid fa-map"></i> Open Map
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Hidden coordinate inputs -->
-                        <input type="hidden" id="custLat" name="custLat">
-                        <input type="hidden" id="custLng" name="custLng">
                         
                         <!-- Delivery Info Display -->
                         <div id="deliveryInfo" style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:20px; border-left: 4px solid #6b0f1a; display:none;">
@@ -439,6 +454,64 @@ window.goToCheckoutStep2 = function() {
     // Smooth scroll to top of form
     const modalContent = document.querySelector('#cartModal .modal-content');
     if(modalContent) modalContent.scrollTop = 0;
+    
+    // Initialize Delivery Type UI
+    setTimeout(() => {
+        if(window.toggleDeliveryType) window.toggleDeliveryType(); 
+    }, 100);
+};
+
+window.toggleDeliveryType = function(type) {
+    if (!type) {
+        const homeRadio = document.querySelector('input[name="deliveryType"][value="Home Delivery"]');
+        type = homeRadio && homeRadio.checked ? "Home Delivery" : "Self Pickup";
+    }
+    
+    const radio = document.querySelector(`input[name="deliveryType"][value="${type}"]`);
+    if(radio) radio.checked = true;
+
+    const labelHome = document.getElementById('labelHomeDelivery');
+    const labelPickup = document.getElementById('labelSelfPickup');
+    const displaySection = document.getElementById('deliveryAddressSection');
+    const deliveryChargeDisplay = document.getElementById('deliveryCharge');
+    const totalWithDeliveryDisplay = document.getElementById('totalWithDelivery');
+    
+    // Base Total (from Cart)
+    const cartTotal = parseFloat(document.getElementById('cartTotal')?.innerText || 0);
+    
+    if (type === 'Home Delivery') {
+        // UI Styles
+        if(labelHome) { labelHome.style.background = "#f0f8ff"; labelHome.style.borderColor = "#6b0f1a"; }
+        if(labelPickup) { labelPickup.style.background = "#fff"; labelPickup.style.borderColor = "#ddd"; }
+        
+        // Show Address Section
+        if(displaySection) displaySection.style.display = 'block';
+        
+        // Validation Reset
+        // (Optional: clear errors if any)
+        
+        // Restore/Update Charges
+        // Use global variable from delivery-map.js
+        const mappedCharge = window.currentDeliveryCharge || 0;
+        
+        if(deliveryChargeDisplay) deliveryChargeDisplay.innerHTML = `₹${mappedCharge.toFixed(2)}`;
+        if(deliveryChargeDisplay) deliveryChargeDisplay.style.color = "#6b0f1a";
+        
+        if(totalWithDeliveryDisplay) totalWithDeliveryDisplay.innerHTML = `₹${(cartTotal + mappedCharge).toFixed(2)}`;
+        
+    } else {
+        // Self Pickup
+        if(labelHome) { labelHome.style.background = "#fff"; labelHome.style.borderColor = "#ddd"; }
+        if(labelPickup) { labelPickup.style.background = "#fff0f0"; labelPickup.style.borderColor = "#6b0f1a"; }
+        
+        // Hide Address Section
+        if(displaySection) displaySection.style.display = 'none';
+        
+        // Zero Charges
+        if(deliveryChargeDisplay) deliveryChargeDisplay.innerHTML = `<span style="color:green; font-weight:bold;">FREE (Pickup)</span>`;
+        
+        if(totalWithDeliveryDisplay) totalWithDeliveryDisplay.innerHTML = `₹${cartTotal.toFixed(2)}`;
+    }
 };
 
 window.goToCheckoutStep1 = function() {
