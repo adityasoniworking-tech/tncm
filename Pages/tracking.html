@@ -112,7 +112,7 @@
                     const data = doc.data();
                     
                     // Set basic info
-                    document.getElementById('resId').innerText = doc.id.toUpperCase();
+                    document.getElementById('resId').innerText = doc.id;
                     document.getElementById('resStatusText').innerText = data.status;
                     
                     // Add timestamp display
@@ -186,14 +186,14 @@
                 s1.classList.add('step-active');
                 s2.classList.add('step-active');
             } 
-            else if (status === "Ready") {
+            else if (status === "Ready" || status === "Ready for Pickup" || status === "Out for Delivery") {
                 scooter.style.left = "calc(66.66% - 15px)";
                 line.style.width = "66.66%";
                 s1.classList.add('step-active');
                 s2.classList.add('step-active');
                 s3.classList.add('step-active');
             }
-            else if (status === "Delivered") {
+            else if (status === "Delivered" || status === "Picked Up") {
                 scooter.style.left = "calc(100% - 20px)";
                 line.style.width = "100%";
                 s1.classList.add('step-active');

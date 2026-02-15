@@ -268,7 +268,7 @@ window.openProfile = function() {
                 const html = `
                 <div id="order-row-${id}" style="background:#fff; border:1px solid #eee; padding:15px; border-radius:12px; margin-bottom:12px; border-left:5px solid #6b0f1a;">
                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; flex-wrap:wrap; gap:5px;">
-                        <strong style="font-size:0.75rem; color:#6b0f1a; word-break:break-all; flex:1; min-width:120px;">#${id.toUpperCase()}</strong>
+                        <strong style="font-size:0.75rem; color:#6b0f1a; word-break:break-all; flex:1; min-width:120px;">${id}</strong>
                         <div style="text-align:right; background:#f9f9f9; padding:5px 8px; border-radius:5px; flex-shrink:0;">
                             <span style="font-size:0.8rem; color:#333; font-weight:500;">${date}</span>
                             ${time ? `<br><span style="font-size:0.7rem; color:#666; font-weight:400;">${time}</span>` : ''}
@@ -285,7 +285,7 @@ window.openProfile = function() {
                             <button onclick="viewOrderBill('${id}')" style="background:linear-gradient(135deg, #28a745, #20c997); color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(40,167,69,0.3); transition:all 0.3s ease; min-width:60px; white-space:nowrap;" title="View Bill">
                                 🧾 Bill
                             </button>
-                            <a href="tracking.html?id=${id}" style="background:linear-gradient(135deg, #6b0f1a, #8b2530); color:white; text-decoration:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(107,15,26,0.3); transition:all 0.3s ease; border:1px solid #6b0f1a; min-width:60px; white-space:nowrap; text-align:center; display:inline-block;">
+                            <a href="/Pages/tracking.html?id=${id}" style="background:linear-gradient(135deg, #6b0f1a, #8b2530); color:white; text-decoration:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(107,15,26,0.3); transition:all 0.3s ease; border:1px solid #6b0f1a; min-width:60px; white-space:nowrap; text-align:center; display:inline-block;">
                                 Track
                             </a>
                         </div>

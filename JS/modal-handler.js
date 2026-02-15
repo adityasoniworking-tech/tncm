@@ -186,7 +186,7 @@ window.openProfile = function() {
                   list.innerHTML += `
                     <div class="order-card-mini" style="background:white; padding:15px; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); border-left:5px solid #6b0f1a;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                            <span style="font-weight:bold; color:#6b0f1a; font-size:0.75rem; word-break:break-all;">#${orderId.toUpperCase()}</span>
+                            <span style="font-weight:bold; color:#6b0f1a; font-size:0.75rem; word-break:break-all;">${orderId}</span>
                             <div style="text-align:right; background:#f9f9f9; padding:5px 8px; border-radius:5px;">
                                 <span style="font-size:0.8rem; color:#333; font-weight:500;">${date}</span>
                                 ${time ? `<br><span style="font-size:0.7rem; color:#666; font-weight:400;">${time}</span>` : ''}
@@ -202,7 +202,7 @@ window.openProfile = function() {
                                 <button onclick="viewOrderBill('${orderId}')" style="background:linear-gradient(135deg, #28a745, #20c997); color:white; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(40,167,69,0.3); transition:all 0.3s ease;" title="View Bill">
                                     🧾 Bill
                                 </button>
-                                <button onclick="window.location.href='tracking.html?id=${orderId}'" style="background:linear-gradient(135deg, #6b0f1a, #8b2530); color:white; border:1px solid #6b0f1a; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(107,15,26,0.3); transition:all 0.3s ease;">
+                                <button onclick="window.location.href='/Pages/tracking.html?id=${orderId}'" style="background:linear-gradient(135deg, #6b0f1a, #8b2530); color:white; border:1px solid #6b0f1a; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.7rem; font-weight:600; box-shadow:0 2px 4px rgba(107,15,26,0.3); transition:all 0.3s ease;">
                                     Track
                                 </button>
                             </div>

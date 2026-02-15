@@ -625,7 +625,7 @@ class BillGenerator {
                 <div class="bill-meta">
                     <div class="meta-row">
                         <span class="meta-label">Bill No:</span>
-                        <span class="meta-value">#${orderId.toUpperCase()}</span>
+                        <span class="meta-value">${orderId}</span>
                     </div>
                     <div class="meta-row">
                         <span class="meta-label">Date:</span>

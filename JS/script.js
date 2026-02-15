@@ -501,7 +501,7 @@ function showTrackingResult(id, order) {
     if(!resDiv) return;
 
     resDiv.style.display = 'block';
-    document.getElementById('resId').innerText = id.toUpperCase(); 
+    document.getElementById('resId').innerText = id; 
     
     // Add timestamp display
     const dateElement = document.getElementById('resDate');
@@ -543,6 +543,52 @@ function showTrackingResult(id, order) {
     line.style.background = "#6b0f1a"; // Normal Maroon color
     scooter.style.opacity = "1";
 
+    // --- DYNAMIC UI BASED ON DELIVERY TYPE ---
+    const isPickup = (order.deliveryType === "Self Pickup");
+    
+    // 1. Icon Change
+    if (scooter) {
+        scooter.innerHTML = isPickup ? '<i class="fa-solid fa-store"></i>' : '<i class="fa-solid fa-motorcycle"></i>';
+    }
+
+    // 2. Step Labels Change
+    if (s3) {
+        const label = s3.querySelector('.step-label');
+        if(label) label.innerText = isPickup ? "Ready for Pickup" : "Out for Delivery";
+    }
+    if (s4) {
+        const label = s4.querySelector('.step-label');
+        if(label) label.innerText = isPickup ? "Picked Up" : "Delivered";
+    }
+
+    // 3. Address Display
+    const addressContainer = document.getElementById('trackingAddressDisplay');
+    if (!addressContainer) {
+        // Create container if not exists
+        const newContainer = document.createElement('div');
+        newContainer.id = 'trackingAddressDisplay';
+        newContainer.style.marginTop = '15px';
+        newContainer.style.padding = '10px';
+        newContainer.style.background = '#f0f8ff';
+        newContainer.style.borderRadius = '8px';
+        newContainer.style.fontSize = '0.9rem';
+        newContainer.style.color = '#333';
+        resDiv.insertBefore(newContainer, resDiv.children[1]); // Insert after status box
+    }
+    
+    const displayAddr = document.getElementById('trackingAddressDisplay');
+    if(displayAddr) {
+        if(isPickup) {
+            displayAddr.innerHTML = `<strong>Pickup Location:</strong><br>The Nutty Choco Morsels<br>Gandhinagar, Gujarat`;
+            displayAddr.style.background = "#fff0f0"; // Light red for pickup
+            displayAddr.style.borderLeft = "4px solid #6b0f1a";
+        } else {
+             displayAddr.innerHTML = `<strong>Delivery Address:</strong><br>${order.address || 'Address not available'}`;
+             displayAddr.style.background = "#f0f8ff"; // Light blue for delivery
+             displayAddr.style.borderLeft = "4px solid #007bff";
+        }
+    }
+
     // --- 🚨 REJECTED SPECIAL LOGIC 🚨 ---
     if (order.status === "Rejected") {
         statusText.innerText = "Order Rejected";
@@ -556,13 +602,19 @@ function showTrackingResult(id, order) {
     // --- NORMAL STEPS LOGIC (Bina refresh ke scooter chalega) ---
     if (s1) s1.classList.add('step-active');
     
-    if ((order.status === "Accepted" || order.status === "Confirmed" || order.status === "Ready" || order.status === "Delivered") && s2) {
+    if ((order.status === "Accepted" || order.status === "Confirmed" || order.status === "Ready" || order.status === "Delivered" || order.status === "Picked Up") && s2) {
         s2.classList.add('step-active');
     }
-    if ((order.status === "Ready" || order.status === "Delivered") && s3) {
+    
+    // Step 3 Logic: Ready / Out for Delivery
+    const step3ActiveStatuses = ["Ready", "Out for Delivery", "Ready for Pickup", "Delivered", "Picked Up"];
+    if (step3ActiveStatuses.includes(order.status) && s3) {
         s3.classList.add('step-active');
     }
-    if (order.status === "Delivered" && s4) {
+    
+    // Step 4 Logic: Delivered / Picked Up
+    const step4ActiveStatuses = ["Delivered", "Picked Up"];
+    if (step4ActiveStatuses.includes(order.status) && s4) {
         s4.classList.add('step-active');
     }
 
@@ -746,7 +798,7 @@ window.loadUserOrders = function() {
               container.innerHTML += `
                 <div class="order-card-mini" style="background:white; padding:15px; border-radius:12px; margin-bottom:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05); border-left:5px solid #6b0f1a;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                        <span style="font-weight:bold; color:#6b0f1a; font-size:0.75rem; word-break:break-all;">#${orderId.toUpperCase()}</span>
+                        <span style="font-weight:bold; color:#6b0f1a; font-size:0.75rem; word-break:break-all;">${orderId}</span>
                         <div style="text-align:right; background:#f9f9f9; padding:5px 8px; border-radius:5px;">
                             <span style="font-size:0.8rem; color:#333; font-weight:500;">${date}</span>
                             ${time ? `<br><span style="font-size:0.7rem; color:#666; font-weight:400;">${time}</span>` : ''}
@@ -759,7 +811,7 @@ window.loadUserOrders = function() {
                         <strong style="color:#6b0f1a;">₹${order.totalAmount ? order.totalAmount.toFixed(2) : '0.00'}</strong>
                         <div style="display:flex; gap:10px;">
                             <span style="padding:4px 10px; border-radius:15px; background:#fff0f0; color:#6b0f1a; font-size:0.75rem; font-weight:bold;">${order.status || 'Pending'}</span>
-                            <button onclick="window.location.href='tracking.html?id=${orderId}'" style="background:none; border:1px solid #6b0f1a; color:#6b0f1a; padding:4px 12px; border-radius:5px; cursor:pointer; font-size:0.75rem;">Track</button>
+                            <button onclick="window.location.href='/Pages/tracking.html?id=${orderId}'" style="background:none; border:1px solid #6b0f1a; color:#6b0f1a; padding:4px 12px; border-radius:5px; cursor:pointer; font-size:0.75rem;">Track</button>
                         </div>
                     </div>
                 </div>`;
