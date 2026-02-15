@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
                             <input type="hidden" id="custLng" name="custLng">
                         </div>
                         
-                        <!-- Delivery Info Display -->
                         <div id="deliveryInfo" style="background:#f8f9fa; padding:15px; border-radius:10px; margin-bottom:20px; border-left: 4px solid #6b0f1a; display:none;">
                              <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                                 <span style="color: #666;">Delivery Distance</span>
@@ -111,6 +110,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <span style="font-weight: bold;">Final Total</span>
                                 <span id="totalWithDelivery" style="color:#6b0f1a; font-weight:bold; font-size: 1.1rem;">₹0.00</span>
                             </div>
+                        </div>
+
+                        <!-- T&C Checkbox -->
+                        <div style="margin-bottom: 15px; display: flex; align-items: start; gap: 10px; background: #fff0f0; padding: 10px; border-radius: 8px; border: 1px solid #ffcccc;">
+                            <input type="checkbox" id="termsCheckbox" style="margin-top: 3px; accent-color: #6b0f1a; width: 18px; height: 18px; cursor: pointer;">
+                            <label for="termsCheckbox" style="font-size: 0.9rem; color: #555; cursor: pointer; line-height: 1.4;">
+                                I accept the <strong>Terms & Conditions</strong>: if order is placed then you can't cancel your order.
+                            </label>
                         </div>
                         
                         <button class="order-btn-main" onclick="window.placeOrder('COD')" style="width:100%; background: linear-gradient(135deg, #6b0f1a 0%, #4a0a12 100%); color:white; padding:15px; border:none; border-radius:10px; font-weight:bold; font-size: 1.1rem; cursor:pointer; box-shadow: 0 4px 15px rgba(107, 15, 26, 0.3);">

@@ -219,6 +219,12 @@ window.placeOrder = function(paymentMethod = 'COD') {
     const name = document.getElementById('custName').value.trim();
     const phone = document.getElementById('custPhone').value.trim();
     
+    // Validate T&C Checkbox
+    const termsCheckbox = document.getElementById('termsCheckbox');
+    if (!termsCheckbox || !termsCheckbox.checked) {
+        return alert("Please accept the Terms & Conditions to place your order.");
+    }
+    
     // Determine Delivery Type
     let deliveryType = "Home Delivery";
     const pickupRadio = document.querySelector('input[name="deliveryType"][value="Self Pickup"]');
