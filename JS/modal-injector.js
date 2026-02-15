@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div style="margin-bottom: 15px; display: flex; align-items: start; gap: 10px; background: #fff0f0; padding: 10px; border-radius: 8px; border: 1px solid #ffcccc;">
                             <input type="checkbox" id="termsCheckbox" style="margin-top: 3px; accent-color: #6b0f1a; width: 18px; height: 18px; cursor: pointer;">
                             <label for="termsCheckbox" style="font-size: 0.9rem; color: #555; cursor: pointer; line-height: 1.4;">
-                                I accept the <strong>Terms & Conditions</strong>: if order is placed then you can't cancel your order.
+                                <strong>By placing this order, I acknowledge that the order cannot be cancelled after confirmation</strong>
                             </label>
                         </div>
                         

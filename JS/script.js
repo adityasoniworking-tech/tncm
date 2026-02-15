@@ -222,7 +222,7 @@ window.placeOrder = function(paymentMethod = 'COD') {
     // Validate T&C Checkbox
     const termsCheckbox = document.getElementById('termsCheckbox');
     if (!termsCheckbox || !termsCheckbox.checked) {
-        return alert("Please accept the Terms & Conditions to place your order.");
+        return alert("Please acknowledge that the order cannot be cancelled after confirmation.");
     }
     
     // Determine Delivery Type
