@@ -154,6 +154,75 @@
             }
         }
 
+        /* --- Features Section Optimization --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            max-width: 1200px;
+            margin: 15px auto 0;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 0 8px;
+                margin: 5px auto 0;
+            }
+            .feature-box {
+                padding: 10px 8px;
+                justify-content: flex-start;
+            }
+            .feature-box i {
+                font-size: 1.3rem;
+                margin-bottom: 5px;
+            }
+            .feature-box h3 {
+                font-size: 0.85rem;
+                margin: 0 0 4px 0 !important;
+                line-height: 1.1;
+            }
+            .feature-box p {
+                font-size: 0.72rem;
+                margin: 0 !important;
+                line-height: 1.2;
+            }
+        }
+
+        .feature-box {
+            padding: 30px 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(139, 69, 19, 0.15) !important;
+        }
+
+        .feature-box i {
+            font-size: 1.8rem;
+            color: #5D2E17; /* Dark Brown Color */
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-box:hover i {
+            transform: scale(1.1);
+        }
+
         /* --- Social Media Row --- */
         .social-icons-row {
             display: flex;
@@ -249,26 +318,26 @@
         </div>
     </div>
 
-    <section class="features-section" style="padding: 30px 5% 10px; background: #fff;">
+    <section class="features-section" style="padding: 15px 5% 5px; background: #fff;">
         <h2 class="responsive-title">Why The Nutty Choco Morsels ?</h2>
-        <div class="contact-grid"> 
-            <div class="contact-box" style="border: 2px solid #8B4513; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
-                <i class="fa-solid fa-leaf" style="font-size: 1.5rem; color: var(--accent); margin-bottom: 10px;"></i>
+        <div class="features-grid"> 
+            <div class="feature-box" style="border: 2px solid #5D2E17; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.15); border-radius: 10px; background: white;">
+                <i class="fa-solid fa-leaf"></i>
                 <h3>100% Eggless</h3>
                 <p>Pure vegetarian treats baked to perfection.</p>
             </div>
-            <div class="contact-box" style="border: 2px solid #8B4513; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
-                <i class="fa-solid fa-cookie-bite" style="font-size: 1.5rem; color: var(--accent); margin-bottom: 10px;"></i>
+            <div class="feature-box" style="border: 2px solid #5D2E17; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
+                <i class="fa-solid fa-cookie-bite"></i>
                 <h3>Premium Quality</h3>
                 <p>Made from Premium quality chocolate & handpicked nuts.</p>
             </div>
-            <div class="contact-box" style="border: 2px solid #8B4513; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
-                <i class="fa-solid fa-truck-fast" style="font-size: 1.5rem; color: var(--accent); margin-bottom: 10px;"></i>
+            <div class="feature-box" style="border: 2px solid #5D2E17; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
+                <i class="fa-solid fa-truck-fast"></i>
                 <h3>Freshly Baked</h3>
                 <p>Oven-fresh goodness , delivered to your doorstep.</p>
             </div>
-            <div class="contact-box" style="border: 2px solid #8B4513; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
-                <i class="fa-solid fa-heart" style="font-size: 1.5rem; color: var(--accent); margin-bottom: 10px;"></i>
+            <div class="feature-box" style="border: 2px solid #5D2E17; box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2); border-radius: 10px; background: white;">
+                <i class="fa-solid fa-heart"></i>
                 <h3>Made with Love</h3>
                 <p>Crafted by passion, served with sweetness.</p>
             </div>
