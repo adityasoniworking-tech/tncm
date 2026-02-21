@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nutty-bakery-v1.0.9';
+const CACHE_NAME = 'nutty-bakery-v1.1.0';
 const ASSETS = [
   '/',
   '/index.html',
@@ -8,14 +8,14 @@ const ASSETS = [
   '/Pages/tracking.html',
   '/Pages/whatsapp_select.html',
   '/Pages/offline.html',
-  '/CSS/style.css?v=1.0.6',
-  '/CSS/modals.css?v=1.0.6',
-  '/JS/script.js?v=1.0.6',
-  '/JS/layout.js?v=1.0.6',
-  '/JS/delivery-map.js?v=1.0.6',
-  '/JS/modal-handler.js?v=1.0.6',
-  '/JS/modal-injector.js?v=1.0.6',
-  '/JS/bill.js?v=1.0.6',
+  '/CSS/style.css?v=1.1.0',
+  '/CSS/modals.css?v=1.1.0',
+  '/JS/script.js?v=1.1.0',
+  '/JS/layout.js?v=1.1.0',
+  '/JS/delivery-map.js?v=1.1.0',
+  '/JS/modal-handler.js?v=1.1.0',
+  '/JS/modal-injector.js?v=1.1.0',
+  '/JS/bill.js?v=1.1.0',
   '/assets/images/logo-mobile.svg',
   '/assets/images/logo192.png',
   '/assets/icons/favicon.ico',
