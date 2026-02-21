@@ -9,6 +9,61 @@
     <link rel="stylesheet" href="../CSS/modals.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Floating Cart Button */
+        .fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #2ecc71;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #800020;
+            color: #fff;
+            font-size: 10px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+
+        @media (max-width: 768px) {
+            .fab {
+                width: 50px !important;
+                height: 50px !important;
+                bottom: 15px !important;
+                right: 15px !important;
+                font-size: 20px !important;
+            }
+
+            #cart-count {
+                width: 20px !important;
+                height: 20px !important;
+                font-size: 10px !important;
+                top: -3px !important;
+                right: -3px !important;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -16,7 +71,7 @@
 
     <div class="page-container" style="max-width: 600px; text-align: center;">
         
-        <h1 class="section-title" style="font-size: 2.5rem; margin-bottom: 10px;">💬 Select Your Contact</h1>
+        <h1 class="section-title" style="font-size: 2.5rem; margin-bottom: 10px;"> Select Your Contact</h1>
         <p style="color: #666; margin-bottom: 40px;">Please choose the appropriate founder for your query.</p>
 
         <div class="contact-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -37,6 +92,11 @@
         
         <p style="margin-top: 30px; font-size: 0.9rem; color: #999;">Please choose the relevant person for quick assistance.</p>
 
+    </div>
+
+    <div class="fab" onclick="openCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cart-count">0</span>
     </div>
 
     <footer id="main-footer"></footer>

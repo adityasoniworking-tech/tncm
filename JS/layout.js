@@ -20,11 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
             <div id="auth-section" style="display: flex; align-items: center; margin: 0 10px;">
                 </div>
 
-            <a href="javascript:void(0)" class="nav-cart-green" onclick="window.openCart()" style="position:relative;">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-count" style="position:absolute; top:-5px; right:-10px; background:red; color:white; border-radius:50%; padding:2px 6px; font-size:10px; display:none;">0</span>
-            </a>
-            
                 <a href="../Pages/contact.html" class="contact-btn">Contact Us</a>
         </nav>
     `;
@@ -78,10 +73,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. INJECT MODALS
     const extraComponentsHTML = `
-        <a href="../Pages/tracking.html" class="floating-track-btn" title="Track My Order">
-            <i class="fa-solid fa-location-crosshairs"></i>
-            <span>Track Order</span>
-        </a>
 
         <div id="authModal" class="modal" style="display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.8); z-index:10005;">
             <div class="modal-content" style="max-width:380px; position:relative; padding:30px;">
@@ -182,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         </button>
                     </div>`;
             } else {
-                authSection.innerHTML = `<button onclick="document.getElementById('authModal').style.display='flex'" style="background:#6b0f1a; color:white; border:none; padding:8px 18px; border-radius:20px; cursor:pointer; font-weight:500;">Login / Register</button>`;
+                authSection.innerHTML = `<button onclick="document.getElementById('authModal').style.display='flex'" class="contact-btn">Login</button>`;
             }
         });
     }
