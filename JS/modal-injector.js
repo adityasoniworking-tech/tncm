@@ -41,13 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <!-- Delivery Type Selection -->
                         <div style="background:#fff; padding:10px; border-radius:10px; margin-bottom:15px; border:1px solid #eee; display:flex; gap:10px;">
-                            <label style="flex:1; cursor:pointer; display:flex; align-items:center; gap:5px; padding:10px; border:1px solid #ddd; border-radius:8px; transition:0.3s; background:#f0f8ff; border-color:#6b0f1a;" id="labelHomeDelivery" onclick="window.toggleDeliveryType('Home Delivery')">
-                                <input type="radio" name="deliveryType" value="Home Delivery" checked style="accent-color:#6b0f1a;">
-                                <span style="font-weight:bold; font-size:0.9rem;">🏠 Home Delivery</span>
-                            </label>
                             <label style="flex:1; cursor:pointer; display:flex; align-items:center; gap:5px; padding:10px; border:1px solid #ddd; border-radius:8px; transition:0.3s; background:#fff;" id="labelSelfPickup" onclick="window.toggleDeliveryType('Self Pickup')">
                                 <input type="radio" name="deliveryType" value="Self Pickup" style="accent-color:#6b0f1a;">
                                 <span style="font-weight:bold; font-size:0.9rem;">🏬 Self Pickup</span>
+                            </label>
+                            <label style="flex:1; cursor:pointer; display:flex; align-items:center; gap:5px; padding:10px; border:1px solid #ddd; border-radius:8px; transition:0.3s; background:#f0f8ff; border-color:#6b0f1a;" id="labelHomeDelivery" onclick="window.toggleDeliveryType('Home Delivery')">
+                                <input type="radio" name="deliveryType" value="Home Delivery" checked style="accent-color:#6b0f1a;">
+                                <span style="font-weight:bold; font-size:0.9rem;">🏠 Home Delivery</span>
                             </label>
                         </div>
                         
@@ -469,16 +469,65 @@ window.goToCheckoutStep2 = function() {
 };
 
 window.toggleDeliveryType = function(type) {
+    const labelHome = document.getElementById('labelHomeDelivery');
+    const labelPickup = document.getElementById('labelSelfPickup');
+    
+    // Check global storeSettings (from script.js)
+    const canDeliver = typeof storeSettings !== 'undefined' ? storeSettings.isDeliveryEnabled : true;
+    const canPickup = typeof storeSettings !== 'undefined' ? storeSettings.isPickupEnabled : true;
+
+    // Show/Hide labels based on settings (UPDATED: Now blur/disable instead of hiding)
+    if (labelHome) {
+        if (canDeliver) {
+            labelHome.style.opacity = '1';
+            labelHome.style.filter = 'none';
+            labelHome.style.pointerEvents = 'auto';
+            labelHome.querySelector('input').disabled = false;
+        } else {
+            labelHome.style.opacity = '0.5';
+            labelHome.style.filter = 'blur(1px)';
+            labelHome.style.pointerEvents = 'none';
+            labelHome.querySelector('input').disabled = true;
+        }
+    }
+    if (labelPickup) {
+        if (canPickup) {
+            labelPickup.style.opacity = '1';
+            labelPickup.style.filter = 'none';
+            labelPickup.style.pointerEvents = 'auto';
+            labelPickup.querySelector('input').disabled = false;
+        } else {
+            labelPickup.style.opacity = '0.5';
+            labelPickup.style.filter = 'blur(1px)';
+            labelPickup.style.pointerEvents = 'none';
+            labelPickup.querySelector('input').disabled = true;
+        }
+    }
+
     if (!type) {
-        const homeRadio = document.querySelector('input[name="deliveryType"][value="Home Delivery"]');
-        type = homeRadio && homeRadio.checked ? "Home Delivery" : "Self Pickup";
+        if (canDeliver) type = "Home Delivery";
+        else if (canPickup) type = "Self Pickup";
+        else {
+            // Both disabled - should handle this gracefully
+            const checkoutForm = document.querySelector('.checkout-form');
+            if (checkoutForm && !document.getElementById('storeClosedMsg')) {
+                const msg = document.createElement('p');
+                msg.id = 'storeClosedMsg';
+                msg.style.color = 'red';
+                msg.style.fontWeight = 'bold';
+                msg.style.textAlign = 'center';
+                msg.innerText = "Store is currently not accepting orders.";
+                checkoutForm.prepend(msg);
+                document.querySelector('.order-btn-main').disabled = true;
+                document.querySelector('.order-btn-main').style.opacity = '0.5';
+            }
+            return;
+        }
     }
     
     const radio = document.querySelector(`input[name="deliveryType"][value="${type}"]`);
     if(radio) radio.checked = true;
 
-    const labelHome = document.getElementById('labelHomeDelivery');
-    const labelPickup = document.getElementById('labelSelfPickup');
     const displaySection = document.getElementById('deliveryAddressSection');
     const deliveryChargeDisplay = document.getElementById('deliveryCharge');
     const totalWithDeliveryDisplay = document.getElementById('totalWithDelivery');
@@ -486,7 +535,7 @@ window.toggleDeliveryType = function(type) {
     // Base Total (from Cart)
     const cartTotal = parseFloat(document.getElementById('cartTotal')?.innerText || 0);
     
-    if (type === 'Home Delivery') {
+    if (type === 'Home Delivery' && canDeliver) {
         // UI Styles
         if(labelHome) { labelHome.style.background = "#f0f8ff"; labelHome.style.borderColor = "#6b0f1a"; }
         if(labelPickup) { labelPickup.style.background = "#fff"; labelPickup.style.borderColor = "#ddd"; }
@@ -494,19 +543,16 @@ window.toggleDeliveryType = function(type) {
         // Show Address Section
         if(displaySection) displaySection.style.display = 'block';
         
-        // Validation Reset
-        // (Optional: clear errors if any)
-        
-        // Restore/Update Charges
-        // Use global variable from delivery-map.js
         const mappedCharge = window.currentDeliveryCharge || 0;
         
-        if(deliveryChargeDisplay) deliveryChargeDisplay.innerHTML = `₹${mappedCharge.toFixed(2)}`;
-        if(deliveryChargeDisplay) deliveryChargeDisplay.style.color = "#6b0f1a";
+        if(deliveryChargeDisplay) {
+            deliveryChargeDisplay.innerHTML = `₹${mappedCharge.toFixed(2)}`;
+            deliveryChargeDisplay.style.color = "#6b0f1a";
+        }
         
         if(totalWithDeliveryDisplay) totalWithDeliveryDisplay.innerHTML = `₹${(cartTotal + mappedCharge).toFixed(2)}`;
         
-    } else {
+    } else if (type === 'Self Pickup' && canPickup) {
         // Self Pickup
         if(labelHome) { labelHome.style.background = "#fff"; labelHome.style.borderColor = "#ddd"; }
         if(labelPickup) { labelPickup.style.background = "#fff0f0"; labelPickup.style.borderColor = "#6b0f1a"; }

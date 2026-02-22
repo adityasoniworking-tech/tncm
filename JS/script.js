@@ -16,8 +16,29 @@ let cart = JSON.parse(localStorage.getItem('user_cart')) || {};
 let isViewAll = false;
 let currentCategory = 'all';
 let dbMenuItems = []; 
+let storeSettings = { isDeliveryEnabled: true, isPickupEnabled: true };
 
 // --- 3. UI LOGIC & INITIALIZATION ---
+
+// --- NEW: FETCH STORE SETTINGS ---
+function fetchStoreSettings() {
+    db.collection("settings").doc("store_config").onSnapshot(doc => {
+        if (doc.exists) {
+            storeSettings = doc.data();
+            console.log("Store settings updated:", storeSettings);
+            // If the checkout modal is currently open, we might need to update it
+            if (typeof window.toggleDeliveryType === 'function') {
+                // Determine which one to show/select if the current one becomes disabled
+                const currentType = document.querySelector('input[name="deliveryType"]:checked')?.value;
+                if (currentType === "Home Delivery" && !storeSettings.isDeliveryEnabled) {
+                    window.toggleDeliveryType("Self Pickup");
+                } else if (currentType === "Self Pickup" && !storeSettings.isPickupEnabled) {
+                    window.toggleDeliveryType("Home Delivery");
+                }
+            }
+        }
+    });
+}
 
 // --- NEW: INSTANT CACHE CHECK (To stop flicker) ---
 function checkAuthCache() {
@@ -43,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 1. Initial Data Fetching
     fetchMenuFromDB();
+    fetchStoreSettings();
     if (window.updateCartIcon) window.updateCartIcon();
 
     // 2. URL Parameters parsing
